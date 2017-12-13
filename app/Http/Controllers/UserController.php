@@ -14,15 +14,11 @@ namespace App\Http\Controllers;
 
 use App\Contracts\UserRepositoryInterface;
 use App\Group;
-use App\Mail\InviteUser;
 use App\User;
-use App\Category;
 use App\Peer;
 use App\Torrent;
-use App\TorrentFile;
 use App\Comment;
 use App\Client;
-use App\Shoutbox;
 use App\Post;
 use App\Topic;
 use App\PrivateMessage;
@@ -35,15 +31,10 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Contracts\Auth\Authenticatable;
-use App\Http\Requests\ValidateSecretRequest;
-use Illuminate\Support\Facades\Input;
+
 
 use Cache;
 use \Toastr;
