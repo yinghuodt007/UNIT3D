@@ -39,10 +39,14 @@
           <tr>
             <td>
               @if($u->user->private_profile == 1)
-              <span class="badge-user text-bold"><span class="text-orange"><i class="fa fa-eye-slash" aria-hidden="true"></i>HIDDEN</span>@if(Auth::user()->id == $u->user->id || Auth::user()->group->is_modo)<a href="{{ route('profil', ['username' => $u->user->username, 'id' => $u->user->id]) }}">({{ $u->user->username }})</a></span>
+                    <span class="badge-user text-bold"><span class="text-orange"><i class="fa fa-eye-slash"
+                                                                                    aria-hidden="true"></i>HIDDEN</span>@if(Auth::user()->id == $u->user->id || Auth::user()->group->is_modo)
+                            <a href="{{ route('profile', ['username' => $u->user->username, 'id' => $u->user->id]) }}">({{ $u->user->username }}
+                                )</a></span>
               @endif
               @else
-              <span class="badge-user text-bold"><a href="{{ route('profil', ['username' => $u->user->username, 'id' => $u->user->id]) }}">{{ $u->user->username }}</a></span>
+                    <span class="badge-user text-bold"><a
+                                href="{{ route('profile', ['username' => $u->user->username, 'id' => $u->user->id]) }}">{{ $u->user->username }}</a></span>
               @endif
             </td>
             <td>

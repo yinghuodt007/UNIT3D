@@ -5,11 +5,13 @@
 @stop
 
 @section('meta')
-<meta name="description" content="{{ 'Profil de l\'utilisateur ' . $user->username . ' sur le site ' . Config::get('other.title') . '. Découvrer son profil RLM en intégralité en vous inscrivant.' }}"> @stop
+  <meta name="description"
+        content="{{ 'Profil de l\'utilisateur ' . $user->username . ' sur le site ' . Config::get('other.title') . '. Découvrer son profile RLM en intégralité en vous inscrivant.' }}"> @stop
 
 @section('breadcrumb')
 <li>
-  <a href="{{ route('profil', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url" class="l-breadcrumb-item-link">
+  <a href="{{ route('profile', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url"
+     class="l-breadcrumb-item-link">
     <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $user->username }}</span>
   </a>
 </li>
@@ -47,12 +49,13 @@
         {{ $user->username }}'s Follower's:
           @foreach($followers as $f)
           @if($f->user->image != null)
-          <a href="{{ route('profil', ['username' => $f->user->username, 'id' => $f->user_id]) }}">
+            <a href="{{ route('profile', ['username' => $f->user->username, 'id' => $f->user_id]) }}">
           <img src="{{ url('files/img/' . $f->user->image) }}" data-toggle="tooltip" title="{{ $f->user->username }}" height="50px" data-original-title="{{ $f->user->username }}">
           </a>
           @else
-          <a href="{{ route('profil', ['username' => $f->user->username, 'id' => $f->user_id]) }}">
-          <img src="{{ url('img/profil.png') }}" data-toggle="tooltip" title="{{ $f->user->username }}" height="50px" data-original-title="{{ $f->user->username }}">
+            <a href="{{ route('profile', ['username' => $f->user->username, 'id' => $f->user_id]) }}">
+              <img src="{{ url('img/profile.png') }}" data-toggle="tooltip" title="{{ $f->user->username }}"
+                   height="50px" data-original-title="{{ $f->user->username }}">
           </a>
           @endif
           @endforeach
@@ -68,7 +71,7 @@
             @if($user->image != null)
             <img src="{{ url('files/img/' . $user->image) }}" alt="{{{ $user->username }}}" class="img-circle">
             @else
-            <img src="{{ url('img/profil.png') }}" alt="{{{ $user->username }}}" class="img-circle">
+              <img src="{{ url('img/profile.png') }}" alt="{{{ $user->username }}}" class="img-circle">
             @endif
           </div>
         <div class="col-md-10">
@@ -358,7 +361,7 @@
     <a href="{{ route('user_settings', ['username' => $user->username, 'id' => $user->id]) }}">
       <button class="btn btn-primary"><span class="fa fa-cog"></span> Account Settings</button>
     </a>
-    <a href="{{ route('user_edit_profil', ['username' => $user->username, 'id' => $user->id]) }}">
+    <a href="{{ route('user_edit_profile', ['username' => $user->username, 'id' => $user->id]) }}">
       <button class="btn btn-primary"><span class="fa fa-user"></span> Edit Profile </button>
     </a>
     <a href="{{ route('invite') }}">

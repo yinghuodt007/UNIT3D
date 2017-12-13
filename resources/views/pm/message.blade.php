@@ -39,9 +39,13 @@
       @endif
         <div class="row message-headers">
           <div class="col-sm-4">
-            <div><strong>{{ trans('pm.from') }}:</strong> <a href="{{ route('profil', ['username' => $pm->sender->username, 'id' => $pm->sender->id]) }}" title="">{{ $pm->sender->username }}</a>
+              <div><strong>{{ trans('pm.from') }}:</strong> <a
+                          href="{{ route('profile', ['username' => $pm->sender->username, 'id' => $pm->sender->id]) }}"
+                          title="">{{ $pm->sender->username }}</a>
             </div>
-            <div><strong>{{ trans('pm.to') }}:</strong> <a href="{{ route('profil', ['username' => $pm->receiver->username, 'id' => $pm->receiver->id]) }}" title="">{{ $pm->receiver->username }}</a>
+              <div><strong>{{ trans('pm.to') }}:</strong> <a
+                          href="{{ route('profile', ['username' => $pm->receiver->username, 'id' => $pm->receiver->id]) }}"
+                          title="">{{ $pm->receiver->username }}</a>
             </div>
           </div>
           <div class="col-sm-7">

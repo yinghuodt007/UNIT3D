@@ -32,7 +32,8 @@
     <h2>{{ $topic->name }}</h2>
 
     <div class="topic-info">
-        Started by <a href="{{ route('profil', ['username' => $topic->first_post_user_username, 'id' => $topic->first_post_user_id]) }}">{{ $topic->first_post_user_username }}</a>, {{ date('M d Y H:m', strtotime($topic->created_at)) }}
+      Started by <a
+              href="{{ route('profile', ['username' => $topic->first_post_user_username, 'id' => $topic->first_post_user_id]) }}">{{ $topic->first_post_user_username }}</a>, {{ date('M d Y H:m', strtotime($topic->created_at)) }}
         <span class='label label-primary'>{{ $topic->num_post - 1 }} replies to this topic</span>
         <span class='label label-info'>Viewed {{ $topic->views - 1 }} Times!</span>
       <span style="float: right;"> {{ $posts->links() }}</span>
@@ -42,7 +43,7 @@
       @foreach($posts as $k => $p)
       <div class="post">
         <div class="block">
-        <div class="profil">
+          <div class="profile">
           <div class="head">
             <p>{{ date('m/d/Y', strtotime($p->created_at)) }} {{ $p->created_at->diffForHumans() }}</p>
           </div>
@@ -50,9 +51,11 @@
             @if($p->user->image != null)
             <img src="{{ url('files/img/' . $p->user->image) }}" alt="{{ $p->user->username }}" class="img-thumbnail post-info-image">
             @else
-            <img src="{{ url('img/profil.png') }}" alt="{{ $p->user->username }}" class="img-thumbnail post-info-image">
+              <img src="{{ url('img/profile.png') }}" alt="{{ $p->user->username }}"
+                   class="img-thumbnail post-info-image">
             @endif
-              <a href="{{ route('profil', ['username' => $p->user->username, 'id' => $p->user->id]) }}" class="post-info-username">
+            <a href="{{ route('profile', ['username' => $p->user->username, 'id' => $p->user->id]) }}"
+               class="post-info-username">
                 <p><span class="badge-user text-bold" style="color:{{ $p->user->group->color }}">{{ $p->user->username }}</span>
                   @if($p->user->isOnline())
                   <i class="fa fa-circle text-green" data-toggle="tooltip" title="" data-original-title="User Is Online!"></i>

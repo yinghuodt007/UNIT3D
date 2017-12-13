@@ -2,12 +2,14 @@
 
 @section('breadcrumb')
 <li>
-    <a href="{{ route('profil', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url" class="l-breadcrumb-item-link">
+    <a href="{{ route('profile', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url"
+       class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $user->username }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('user_edit_profil', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url" class="l-breadcrumb-item-link">
+    <a href="{{ route('user_edit_profile', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url"
+       class="l-breadcrumb-item-link">
         <span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('common.edit') }}</span>
     </a>
 </li>
@@ -18,7 +20,7 @@
 <div class="block block-form">
         <h1>Edit Profile</h1>
 
-        {{ Form::open(array('route' => array('user_edit_profil', 'username' => $user->username, 'id' => $user->id), 'files' => true)) }}
+    {{ Form::open(array('route' => array('user_edit_profile', 'username' => $user->username, 'id' => $user->id), 'files' => true)) }}
         {{ csrf_field() }}
             <div class="form-group">
                 <label for="image">Avatar</label><small>.jpg , .jpeg , .bmp , .png , .tiff , .gif are supported</small>

@@ -131,13 +131,15 @@
                   @if(Auth::user()->image != null)
                     <img src="{{ url('files/img/' . Auth::user()->image) }}" alt="{{{ Auth::user()->username }}}" class="img-circle">
                   @else
-                    <img src="{{ url('img/profil.png') }}" alt="{{{ Auth::user()->username }}}" class="img-circle">
+                        <img src="{{ url('img/profile.png') }}" alt="{{{ Auth::user()->username }}}" class="img-circle">
                   @endif
                 </span>
                 <span>{{ Auth::user()->username }} <i class=" fa fa-angle-down"></i></span>
               </a>
               <ul class="dropdown-menu ">
-                <li><a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}"><i class="fa fa-user"></i>{{ trans('user.my-profile') }}</a></li>
+                  <li>
+                      <a href="{{ route('profile', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}"><i
+                                  class="fa fa-user"></i>{{ trans('user.my-profile') }}</a></li>
                 <li><a href="{{ route('lock') }}"><i class="fa fa-lock"></i>Lock Account</a></li>
                 <li>
                   <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-logout"></i>{{ trans('auth.logout') }}</a>
@@ -278,7 +280,8 @@
               <div class="container">
                 <ul class="list-inline">
                   <li><i class="fa fa-user text-black"></i>
-                    <a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}" class="l-header-user-data-link">
+                      <a href="{{ route('profile', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}"
+                         class="l-header-user-data-link">
                       <span class="badge-user" style="color:{{ Auth::user()->group->color }}"><strong>{{ Auth::user()->username }}</strong>@if(Auth::user()->getWarning() > 0) <i class="fa fa-exclamation-circle text-orange" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Active Warning"></i>@endif</span>
                     </a>
                   </li>

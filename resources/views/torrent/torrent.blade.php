@@ -190,9 +190,13 @@
           <td class="col-sm-2"><strong>Uploader</strong></td>
           <td>
             @if($torrent->anon == 1)
-            <span class="badge-user text-orange text-bold">ANONYMOUS @if(Auth::user()->id == $user->id || Auth::user()->group->is_modo)<a href="{{ route('profil', ['username' => $user->username, 'id' => $user->id]) }}">({{ $user->username }})</a>@endif</span>
+                  <span class="badge-user text-orange text-bold">ANONYMOUS @if(Auth::user()->id == $user->id || Auth::user()->group->is_modo)
+                          <a href="{{ route('profile', ['username' => $user->username, 'id' => $user->id]) }}">({{ $user->username }}
+                              )</a>@endif</span>
             @else
-            <span class="badge-user text-bold"><a href="{{ route('profil', ['username' => $user->username, 'id' => $user->id]) }}" style="color:{{ $user->group->color }};">{{ $user->username }}</a></span>
+                  <span class="badge-user text-bold"><a
+                              href="{{ route('profile', ['username' => $user->username, 'id' => $user->id]) }}"
+                              style="color:{{ $user->group->color }};">{{ $user->username }}</a></span>
             @endif
             <a href="{{ route('torrentThank', ['slug' => $torrent->slug, 'id' => $torrent->id]) }}" class="btn btn-xs btn-success pro-ajax" data-id="" data-toggle="tooltip" title="" data-original-title="Thank Uploader">
               <i class="fa fa-thumbs-up"></i> Thank Uploader</a>
@@ -427,16 +431,21 @@
             <div class="media-body">
             @if($comment->anon == 1)
             <a href="#" class="pull-left">
-            <img src="{{ url('img/profil.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48">
-            <strong>ANONYMOUS</strong></a> @if(Auth::user()->id == $comment->user->id || Auth::user()->group->is_modo)<a href="{{ route('profil', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">({{ $comment->user->username }})</a>@endif
+                <img src="{{ url('img/profile.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48">
+                <strong>ANONYMOUS</strong></a> @if(Auth::user()->id == $comment->user->id || Auth::user()->group->is_modo)
+                        <a href="{{ route('profile', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">({{ $comment->user->username }}
+                            )</a>@endif
             @else
-            <a href="{{ route('profil', array('username' => $comment->user->username, 'id' => $comment->user->id)) }}" class="pull-left">
+                    <a href="{{ route('profile', array('username' => $comment->user->username, 'id' => $comment->user->id)) }}"
+                       class="pull-left">
             @if($comment->user->image != null)
             <img src="{{ url('files/img/' . $comment->user->image) }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
             @else
-            <img src="{{ url('img/profil.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
+                        <img src="{{ url('img/profile.png') }}" alt="{{ $comment->user->username }}"
+                             class="img-avatar-48"></a>
             @endif
-            <strong>By <a href="{{ route('profil', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">{{ $comment->user->username }}</a></strong> @endif
+                    <strong>By <a
+                                href="{{ route('profile', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">{{ $comment->user->username }}</a></strong> @endif
             <span class="text-muted"><small><em>{{$comment->created_at->diffForHumans() }}</em></small></span>
             @if($comment->user_id == Auth::id() || Auth::user()->group->is_modo)
             <a title="Delete your comment" href="{{route('comment_delete',['comment_id'=>$comment->id])}}"><i class="pull-right fa fa-lg fa-times" aria-hidden="true"></i></a>

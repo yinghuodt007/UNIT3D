@@ -41,10 +41,14 @@
           <tr>
             <td>
               @if($u->private_profile == 1)
-              <span class="badge-user text-bold"><span class="text-orange"><i class="fa fa-eye-slash" aria-hidden="true"></i>HIDDEN</span>@if(Auth::user()->id == $u->id || Auth::user()->group->is_modo)<a href="{{ route('profil', ['username' => $u->username, 'id' => $u->id]) }}">({{ $u->username }})</a></span>
+                <span class="badge-user text-bold"><span class="text-orange"><i class="fa fa-eye-slash"
+                                                                                aria-hidden="true"></i>HIDDEN</span>@if(Auth::user()->id == $u->id || Auth::user()->group->is_modo)
+                    <a href="{{ route('profile', ['username' => $u->username, 'id' => $u->id]) }}">({{ $u->username }}
+                      )</a></span>
               @endif
               @else
-              <span class="badge-user text-bold"><a href="{{ route('profil', ['username' => $u->username, 'id' => $u->id]) }}">{{ $u->username }}</a></span>
+                <span class="badge-user text-bold"><a
+                          href="{{ route('profile', ['username' => $u->username, 'id' => $u->id]) }}">{{ $u->username }}</a></span>
               @endif
             </td>
             <td><span class="text-green">{{ \App\Helpers\StringHelper::formatBytes($u->uploaded, 2) }}</span></td>

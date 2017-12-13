@@ -15,7 +15,8 @@
 @section('content')
 <div class="container">
 <div class="block">
-  <h2><a class="view-user" data-id="{{ $user->id }}" data-slug="{{ $user->username }}" href="{{ route('profil', ['username' =>  $user->username, 'id' => $user->id]) }}">{{ $user->username }}</a>
+    <h2><a class="view-user" data-id="{{ $user->id }}" data-slug="{{ $user->username }}"
+           href="{{ route('profile', ['username' =>  $user->username, 'id' => $user->id]) }}">{{ $user->username }}</a>
 Invite Tree</h2>
   <hr>
   <div class="row">
@@ -40,7 +41,8 @@ Invite Tree</h2>
     @foreach($records as $record)
       <tr>
         <td>
-			     <a class="view-user" data-id="{{ $record->sender->id }}" data-slug="{{ $record->sender->username }}" href="{{ route('profil', ['username' =>  $record->sender->username, 'id' => $record->sender->id]) }}">{{ $record->sender->username }}</a>
+            <a class="view-user" data-id="{{ $record->sender->id }}" data-slug="{{ $record->sender->username }}"
+               href="{{ route('profile', ['username' =>  $record->sender->username, 'id' => $record->sender->id]) }}">{{ $record->sender->username }}</a>
         </td>
         <td>
           {{ $record->email }}
@@ -56,7 +58,8 @@ Invite Tree</h2>
         </td>
         <td>
           @if($record->accepted_by != null)
-          <a class="view-user" data-id="{{ $record->reciever->id }}" data-slug="{{ $record->reciever->username }}" href="{{ route('profil', ['username' =>  $record->reciever->username, 'id' => $record->reciever->id]) }}">{{ $record->reciever->username }}</a>
+                <a class="view-user" data-id="{{ $record->reciever->id }}" data-slug="{{ $record->reciever->username }}"
+                   href="{{ route('profile', ['username' =>  $record->reciever->username, 'id' => $record->reciever->id]) }}">{{ $record->reciever->username }}</a>
           @else
           N/A
           @endif

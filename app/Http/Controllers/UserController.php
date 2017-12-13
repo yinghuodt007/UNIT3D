@@ -12,6 +12,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\UserRepositoryInterface;
 use App\Group;
 use App\Mail\InviteUser;
 use App\User;
@@ -32,8 +33,7 @@ use App\Warning;
 use App\Note;
 use Carbon\Carbon;
 
-use Illuminate\Support\Facades\Request;
-use Illuminate\Http\Request as IlluminateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -59,6 +59,16 @@ use Carbon\Cabon;
 class UserController extends Controller
 {
     /**
+     * @var UserRepositoryInterface
+     */
+    private $user;
+
+    public function __construct(UserRepositoryInterface $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
      * Get Members List
      *
      * @access public
@@ -66,9 +76,8 @@ class UserController extends Controller
      */
     public function members()
     {
-        $users = User::orderBy('created_at', 'DESC')->paginate(50);
-
-        return view('user.members', ['users' => $users]);
+        $users = $this->user->members();
+        return view('user.members', compact('users'));
     }
 
     /**
@@ -77,14 +86,10 @@ class UserController extends Controller
      * @access public
      *
      */
-    public function userSearch()
+    public function userSearch(Request $request)
     {
-        $search = Request::get('search');
-        $users = User::where([
-            ['username', 'like', '%' . Request::get('username') . '%'],
-        ])->paginate(25);
-        $users->setPath('?username=' . Request::get('username'));
-        return view('user.members')->with('users', $users);
+        $users = $this->user->search($request->get('username'));
+        return view('user.members', compact('users'));
     }
 
     /**
@@ -93,7 +98,7 @@ class UserController extends Controller
      * @access public
      * @return view user.profile
      */
-    public function profil($username, $id)
+    public function profile($username, $id)
     {
         $user = User::findOrFail($id);
         $groups = Group::all();
@@ -114,7 +119,7 @@ class UserController extends Controller
         $hitrun = Warning::where('user_id', '=', $id)->orderBy('created_at', 'DESC')->get();
         $notes = Note::where('user_id', '=', $id)->count();
 
-        return view('user.profil', ['user' => $user, 'groups' => $groups, 'num_uploads' => $num_uploads, 'num_downloads' => $num_downloads, 'achievements' => $achievements, 'followers' => $followers, 'notes' => $notes,
+        return view('user.profile', ['user' => $user, 'groups' => $groups, 'num_uploads' => $num_uploads, 'num_downloads' => $num_downloads, 'achievements' => $achievements, 'followers' => $followers, 'notes' => $notes,
             'seedtime' => $seedtime, 'hiscount' => $hiscount, 'thanks_given' => $thanks_given, 'tor_comments' => $tor_comments, 'art_comments' => $art_comments, 'req_comments' => $req_comments, 'topics' => $topics, 'posts' => $posts, 'warnings' => $warnings, 'hitrun' => $hitrun]);
     }
 
@@ -125,9 +130,10 @@ class UserController extends Controller
      * @return void
      *
      */
-    public function editProfil($username, $id)
+    public function editProfile(Request $request)
     {
         $user = Auth::user();
+
         // Requetes post only
         if (Request::isMethod('post')) {
             if (Request::hasFile('image')) {
@@ -150,10 +156,10 @@ class UserController extends Controller
             // Activity Log
             \LogActivity::addToLog("Member " . $user->username . " has updated there profile.");
 
-            return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
         }
 
-        return view('user.edit_profil', ['user' => $user]);
+        return view('user.edit_profile', ['user' => $user]);
     }
 
     /**
@@ -190,7 +196,7 @@ class UserController extends Controller
             // Activity Log
             \LogActivity::addToLog("Member " . $user->username . " has changed there account settings.");
 
-            return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
         } else {
             return redirect()->back()->with(Toastr::warning('Something Went Wrong!', 'Error', ['options']));
         }
@@ -241,7 +247,7 @@ class UserController extends Controller
                 // Activity Log
                 \LogActivity::addToLog("Member " . $user->username . " has changed there email address on file.");
 
-                return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Email Was Updated Successfully!', 'Yay!', ['options']));
+                return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Email Was Updated Successfully!', 'Yay!', ['options']));
             } else {
                 return redirect()->back()->with(Toastr::warning('Your Password Was Incorrect!', 'Error', ['options']));
             }
@@ -260,7 +266,7 @@ class UserController extends Controller
         if (Request::isMethod('post')) {
             $user->passkey = md5(uniqid() . time() . microtime());
             $user->save();
-            return Redirect::route('profil', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your PID Was Changed Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your PID Was Changed Successfully!', 'Yay!', ['options']));
         } else {
             return redirect()->back()->with(Toastr::warning('Something Went Wrong!', 'Error', ['options']));
         }

@@ -71,7 +71,7 @@ class ShoutboxController extends Controller
                 $avatar = '<img class="profile-avatar tiny pull-left" src="/files/img/' . Auth::user()->image . '">';
             } else {
                 $flag = true;
-                $avatar = '<img class="profile-avatar tiny pull-left" src="/img/profil.png">';
+                $avatar = '<img class="profile-avatar tiny pull-left" src="/img/profile.png">';
             }
 
             if (Auth::user()->isOnline()) {
@@ -123,7 +123,7 @@ class ShoutboxController extends Controller
                     $avatar = '<img class="profile-avatar tiny pull-left" src="/files/img/' . $messages->poster->image . '">';
                 } else {
                     $flag = true;
-                    $avatar = '<img class="profile-avatar tiny pull-left" src="img/profil.png">';
+                    $avatar = '<img class="profile-avatar tiny pull-left" src="img/profile.png">';
                 }
 
                 if (Auth::user()->group->is_modo) {

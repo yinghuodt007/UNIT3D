@@ -13,7 +13,9 @@
       <h2 class="l-footer-section-title">{{ trans('common.account') }}</h2>
       <ul>
         @if(Auth::check())
-        <li><a href="{{ route('profil', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}">My Profile</a></li>
+              <li>
+                  <a href="{{ route('profile', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}">My
+                      Profile</a></li>
         <li>
           <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>

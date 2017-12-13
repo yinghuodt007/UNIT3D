@@ -197,7 +197,9 @@
                 <strong>Requested By</strong>
             </td>
             <td>
-                <span class="badge-user"><a href="{{ route('profil', ['username' => $request->user->username, 'id' => $request->user->id]) }}" title="">{{ $request->user->username }}</a></span>
+                <span class="badge-user"><a
+                            href="{{ route('profile', ['username' => $request->user->username, 'id' => $request->user->id]) }}"
+                            title="">{{ $request->user->username }}</a></span>
                 <span class="badge-extra">{{ $request->created_at->diffForHumans() }}</span>
             </td>
         </tr>
@@ -239,7 +241,9 @@
                 <strong>Filled By</strong>
             </td>
             <td>
-                <span class="badge-user"><a href="{{ route('profil', ['username' => $request->FillUser->username, 'id' => $request->FillUser->id ]) }}" title="">{{ $request->FillUser->username }}</a></span>
+                <span class="badge-user"><a
+                            href="{{ route('profile', ['username' => $request->FillUser->username, 'id' => $request->FillUser->id ]) }}"
+                            title="">{{ $request->FillUser->username }}</a></span>
                 <span class="badge-extra">{{ $request->approved_when->diffForHumans() }}</span>
             </td>
         </tr>
@@ -258,7 +262,9 @@
                 <strong>Filled By</strong>
             </td>
             <td>
-                <span class="badge-user"><a href="{{ route('profil', ['username' => $request->FillUser->username, 'id' => $request->FillUser->id ]) }}" title="">{{ $request->FillUser->username }}</a></span>
+                <span class="badge-user"><a
+                            href="{{ route('profile', ['username' => $request->FillUser->username, 'id' => $request->FillUser->id ]) }}"
+                            title="">{{ $request->FillUser->username }}</a></span>
                 <span class="badge-extra">{{ $request->filled_when->diffForHumans() }}</span>
                 <span class="badge-extra"><a href="{{ route('approveRequest', ['id' => $request->id]) }}">Approve</a></span>
                 <span class="badge-extra"><a href="{{ route('rejectRequest', ['id' => $request->id]) }}">Reject</a></span>
@@ -300,7 +306,9 @@
                 @foreach($voters as $voter)
                 <tr>
                     <td>
-                        <span class="badge-user"><a href="{{ route('profil', ['username' => $voter->user->username, 'id' => $voter->user->id ]) }}" title="">{{ $voter->user->username }}</a></span>
+                        <span class="badge-user"><a
+                                    href="{{ route('profile', ['username' => $voter->user->username, 'id' => $voter->user->id ]) }}"
+                                    title="">{{ $voter->user->username }}</a></span>
                     </td>
                     <td>
                         {{ $voter->seedbonus }}
@@ -342,16 +350,21 @@
             <div class="media-body">
             @if($comment->anon == 1)
             <a href="#" class="pull-left">
-            <img src="{{ url('img/profil.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
-            <strong>ANONYMOUS @if(Auth::user()->group->is_modo)<a href="{{ route('profil', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">({{ $comment->user->username }})</a>@endif</strong>
+                <img src="{{ url('img/profile.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
+                    <strong>ANONYMOUS @if(Auth::user()->group->is_modo)<a
+                                href="{{ route('profile', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">({{ $comment->user->username }}
+                            )</a>@endif</strong>
             @else
-            <a href="{{ route('profil', array('username' => $comment->user->username, 'id' => $comment->user->id)) }}" class="pull-left">
+                    <a href="{{ route('profile', array('username' => $comment->user->username, 'id' => $comment->user->id)) }}"
+                       class="pull-left">
             @if($comment->user->image != null)
             <img src="{{ url('files/img/' . $comment->user->image) }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
             @else
-            <img src="{{ url('img/profil.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
+                        <img src="{{ url('img/profile.png') }}" alt="{{ $comment->user->username }}"
+                             class="img-avatar-48"></a>
             @endif
-            <strong>By <a href="{{ route('profil', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">{{ $comment->user->username }}</a></strong> @endif
+                    <strong>By <a
+                                href="{{ route('profile', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">{{ $comment->user->username }}</a></strong> @endif
             <span class="text-muted"><small><em>{{$comment->created_at->diffForHumans() }}</em></small></span>
             @if($comment->user_id == Auth::id() || Auth::user()->group->is_modo)
             <a title="Delete your comment" href="{{route('comment_delete',['comment_id'=>$comment->id])}}"><i class="pull-right fa fa-lg fa-times" aria-hidden="true"></i></a>
