@@ -33,8 +33,13 @@ class Torrent extends Model
      * Mass assignment fields
      *
      */
-    protected $fillable = ['name', 'slug', 'description', 'mediainfo', 'info_hash', 'file_name', 'num_file', 'announce', 'size', 'nfo', 'category_id', 'user_id',
-        'imdb', 'tvdb', 'tmdb', 'mal', 'type', 'anon', 'stream', 'sd'];
+    protected $fillable = [
+        'name', 'slug', 'description', 'mediainfo',
+        'info_hash', 'file_name', 'num_file', 'announce',
+        'size', 'nfo', 'category_id', 'user_id',
+        'imdb', 'tvdb', 'tmdb', 'mal', 'type', 'anon',
+        'stream', 'sd'
+    ];
 
     /**
      * Rules

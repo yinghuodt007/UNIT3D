@@ -19,7 +19,7 @@
 
 @section('content')
 <div class="container">
-  @if( $user->private_profile == 1 && Auth::user()->id != $user->id && !Auth::user()->group->is_modo )
+  @if( $user->private_profile == 1 && $owner->id != $user->id && !$owner->group->is_modo )
   <div class="container">
     <div class="jumbotron shadowed">
       <div class="container">
@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-md-12 profile-footer">
         {{ $user->username }}'s Recent Achievements:
-          @foreach($achievements as $a)
+        @foreach($user->unlockedAchievements() as $a)
           <img src="/img/badges/{{ $a->details->name }}.png" data-toggle="tooltip" title="" height="50px" data-original-title="{{ $a->details->name }}">
           @endforeach
           <div class="col-xs-1 matches-won"><i class="fa fa-trophy text-success"></i><span>{{ $user->unlockedAchievements()->count() }}</span></div>
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-md-12 profile-footer">
         {{ $user->username }}'s Follower's:
-          @foreach($followers as $f)
+        @foreach($user->follows as $f)
           @if($f->user->image != null)
             <a href="{{ route('profile', ['id' => $f->user_id]) }}">
           <img src="{{ url('files/img/' . $f->user->image) }}" data-toggle="tooltip" title="{{ $f->user->username }}" height="50px" data-original-title="{{ $f->user->username }}">
@@ -59,7 +59,8 @@
           </a>
           @endif
           @endforeach
-        <div class="col-xs-1 matches-won"><i class="fa fa-group text-success"></i><span>{{count($followers)}}</span></div>
+        <div class="col-xs-1 matches-won"><i class="fa fa-group text-success"></i><span>{{count($user->follows)}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -82,13 +83,15 @@
           <i class="fa fa-circle text-red" data-toggle="tooltip" title="" data-original-title="User Is Offline!"></i>
           @endif
           @if($user->getWarning() > 0)<i class="fa fa-exclamation-circle text-orange" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Active Warning"></i>@endif
-          @if($notes > 0 && Auth::user()->group->is_modo)<i class="fa fa-comment fa-beat" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Staff Noted Account"></i>@endif
+          @if($user->notes->count() > 0 && $owner->group->is_modo)<i class="fa fa-comment fa-beat" aria-hidden="true"
+                                                                     data-toggle="tooltip" title=""
+                                                                     data-original-title="Staff Noted Account"></i>@endif
         </h2>
         <h4>Rank: <span class="badge-user text-bold" style="color:{{ $user->group->color }}"><i class="{{ $user->group->icon }}" data-toggle="tooltip" title="" data-original-title="{{ $user->group->name }}"></i> {{ $user->group->name }}</span></h4>
         <h4>Member Since {{ date('M d Y', $user->created_at->getTimestamp()) }}</h4>
         <span style="float:left;">
-        @if(Auth::user()->id != $user->id)
-        @if(Auth::user()->isFollowing($user->id))
+        @if($owner->id != $user->id)
+            @if($owner->isFollowing($user->id))
         <a href="{{ route('unfollow', ['user' => $user->id]) }}" id="delete-follow-{{ $user->target_id }}" class="btn btn-xs btn-info" title="Unfollow"><i class="fa fa-user"></i> Unfollow {{ $user->username }}</a>
         @else
         <a href="{{ route('follow', ['user' => $user->id]) }}" id="follow-user-{{ $user->id }}" class="btn btn-xs btn-success" title="Follow"><i class="fa fa-user"></i> Follow {{ $user->username }}</a>
@@ -97,7 +100,7 @@
         @endif
         </span>
         <span style="float:right;">
-        @if(Auth::check() && Auth::user()->group->is_modo)
+        @if(Auth::check() && $owner->group->is_modo)
         @if($user->group->id == 5)
         <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#modal_user_unban"><span class="fa fa-undo"></span> Unban User </button>
         @else
@@ -119,10 +122,12 @@
           <td colspan="2">
             <ul class="list-inline mb-0">
               <li>
-                <span class="badge-extra text-green text-bold"><i class="fa fa-upload"></i> Total Uploads: {{ $num_uploads }}</span>
+                <span class="badge-extra text-green text-bold"><i
+                          class="fa fa-upload"></i> Total Uploads: {{ $user->torrents->count() }}</span>
               </li>
               <li>
-                <span class="badge-extra text-red text-bold"><i class="fa fa-download"></i> Total Downloads: {{ $num_downloads }}</span>
+                <span class="badge-extra text-red text-bold"><i
+                          class="fa fa-download"></i> Total Downloads: {{ $history->where('actual_downloaded', '>', 0)->count() }}</span>
               </li>
               <li>
                 <span class="badge-extra text-green text-bold"><i class="fa fa-cloud-upload"></i> Total Seeding: {{ $user->getSeeding() }}</span>
@@ -133,7 +138,7 @@
             </ul>
           </td>
         </tr>
-  </div>
+
   <tr>
     <td>Downloaded</td>
     <td>
@@ -154,11 +159,15 @@
   </tr>
   <tr>
     <td>Total Seedtime (All Torrents)</td>
-    <td><span class="badge-user group-member">{{ App\Helpers\StringHelper::timeElapsed($seedtime) }}</span></td>
+    <td>
+      <span class="badge-user group-member">{{ App\Helpers\StringHelper::timeElapsed($history->sum('seedtime')) }}</span>
+    </td>
   </tr>
   <tr>
     <td>Average Seedtime (Per Torrent)</td>
-    <td><span class="badge-user group-member">{{ App\Helpers\StringHelper::timeElapsed(round($seedtime / max(1, $hiscount))) }}</span></td>
+    <td>
+      <span class="badge-user group-member">{{ App\Helpers\StringHelper::timeElapsed(round($history->sum('seedtime') / max(1, $history->count()))) }}</span>
+    </td>
   </tr>
   <tr>
     <td>Badges</td>
@@ -166,7 +175,7 @@
     @if($user->getSeeding() >= 150)
     <span class="badge-user" style="background-color:#3fb618; color:white;" data-toggle="tooltip" title="" data-original-title="Seeding 150 Or More Torrents!"><i class="fa fa-upload"></i> Certified Seeder!</span>
     @endif
-    @if($num_downloads >= 100)
+      @if($history->where('actual_downloaded', '>', 0)->count() >= 100)
     <span class="badge-user" style="background-color:#ff0039; color:white;" data-toggle="tooltip" title="" data-original-title="Downloaded 100 Or More Torrents!"><i class="fa fa-download"></i> Certified Downloader!</span>
     @endif
     @if($user->getSeedbonus() >= 50000)
@@ -197,32 +206,32 @@
         </li>
         <li>
           <span class="badge-extra"><strong>Thanks Given:</strong>
-            <span class="text-green text-bold">{{ $thanks_given }}</span>
+            <span class="text-green text-bold">{{ $user->thanks->count() }}</span>
           </span>
         </li>
         <li>
           <span class="badge-extra"><strong>Article Comments Made:</strong>
-            <span class="text-purple text-bold">{{ $art_comments }}</span>
+            <span class="text-purple text-bold">{{ $user->comments()->where('article_id', '>', 0)->count() }}</span>
           </span>
         </li>
         <li>
           <span class="badge-extra"><strong>Torrent Comments Made:</strong>
-            <span class="text-purple text-bold">{{ $tor_comments }}</span>
+            <span class="text-purple text-bold">{{ $user->comments()->where('torrent_id', '>', 0)->count() }}</span>
           </span>
         </li>
         <li>
           <span class="badge-extra"><strong>Request Comments Made:</strong>
-            <span class="text-purple text-bold">{{ $req_comments }}</span>
+            <span class="text-purple text-bold">{{ $user->comments()->where('requests_id', '>', 0)->count() }}</span>
           </span>
         </li>
         <li>
           <span class="badge-extra"><strong>Forum Topics Made:</strong>
-            <span class="text-purple text-bold">{{ $topics }}</span>
+            <span class="text-purple text-bold">{{ $user->topics->count() }}</span>
           </span>
         </li>
         <li>
           <span class="badge-extra"><strong>Forum Posts Made:</strong>
-            <span class="text-purple text-bold">{{ $posts }}</span>
+            <span class="text-purple text-bold">{{ $user->posts->count() }}</span>
           </span>
         </li>
         <li>
@@ -242,7 +251,7 @@
     <td>Warnings</td>
     <td>
       <span class="badge-extra text-red text-bold"><strong>Active Warnings: {{ $warnings->count() }} / {!! Config::get('hitrun.max_warnings') !!}</strong></span>
-      @if(Auth::check() && Auth::user()->group->is_modo)
+      @if(Auth::check() && $owner->group->is_modo)
       <a href="{{ route('warninglog', ['username' => $user->username, 'id' => $user->id]) }}"><span class="badge-extra text-bold"><strong>Warning Log</strong></span></a>
       @endif
       <div class="progress">
@@ -260,7 +269,7 @@
   </table>
 </div>
 
-  @if(Auth::check() && (Auth::user()->id == $user->id || Auth::user()->group->is_modo))
+    @if(Auth::check() && ($owner->id == $user->id || $owner->group->is_modo))
   <div class="block">
   <h3><i class="fa fa-lock"></i> Private Info</h3>
   <table class="table table-condensed table-bordered table-striped">
@@ -355,7 +364,7 @@
   <br>
 </div>
 
-@if(Auth::check() && Auth::user()->id == $user->id)
+      @if(Auth::check() && $owner->id == $user->id)
 <div class="block">
   <center>
     <a href="{{ route('user_settings', ['username' => $user->username, 'id' => $user->id]) }}">
@@ -374,7 +383,7 @@
 </div>
 @endif
 
-@if(Auth::check() && (Auth::user()->id == $user->id || Auth::user()->group->is_modo))
+      @if(Auth::check() && ($owner->id == $user->id || $owner->group->is_modo))
 <div class="block">
   <center>
     <a href="{{ route('myuploads', ['username' => $user->username, 'id' => $user->id]) }}">

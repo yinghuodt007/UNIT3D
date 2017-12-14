@@ -14,6 +14,7 @@ namespace App\Repositories;
 
 use App\Contracts\UserRepositoryInterface;
 use App\User;
+use Illuminate\Auth\AuthManager;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -22,9 +23,15 @@ class UserRepository implements UserRepositoryInterface
      */
     private $user;
 
-    public function __construct(User $user)
+    /**
+     * @var AuthManager
+     */
+    private $auth;
+
+    public function __construct(User $user, AuthManager $auth)
     {
         $this->user = $user;
+        $this->auth = $auth;
     }
 
 
@@ -39,8 +46,16 @@ class UserRepository implements UserRepositoryInterface
             ['username', 'like', '%' . $username . '%'],
         ])->paginate($paginate);
 
-        //$users->setPath('?username=' . $username);
-
         return $users;
+    }
+
+    public function getAuthenticatedUser()
+    {
+        return $this->auth->user();
+    }
+
+    public function findOrFail($id)
+    {
+        return $this->user->findOrFail($id);
     }
 }

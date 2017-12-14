@@ -69,6 +69,24 @@ class User extends Authenticatable
     }
 
     /**
+     * Thanks
+     *
+     */
+    public function thanks()
+    {
+        return $this->hasManyThrough(Thank::class, Torrent::class);
+    }
+
+    /**
+     * Topics
+     *
+     */
+    public function topics()
+    {
+        return $this->hasMany(Topic::class, 'first_post_user_id', 'id');
+    }
+
+    /**
      * Polls
      *
      */
@@ -83,7 +101,7 @@ class User extends Authenticatable
      */
     public function group()
     {
-        return $this->belongsTo(\App\Group::class);
+        return $this->belongsTo(Group::class);
     }
 
     /**
@@ -92,7 +110,7 @@ class User extends Authenticatable
      */
     public function torrents()
     {
-        return $this->hasMany(\App\Torrent::class);
+        return $this->hasMany(Torrent::class);
     }
 
     /**
@@ -101,7 +119,7 @@ class User extends Authenticatable
      */
     public function pm_sender()
     {
-        return $this->hasMany(\App\PrivateMessage::class, "sender_id");
+        return $this->hasMany(PrivateMessage::class, "sender_id");
     }
 
     /**
@@ -110,7 +128,7 @@ class User extends Authenticatable
      */
     public function pm_receiver()
     {
-        return $this->hasMany(\App\PrivateMessage::class, "reciever_id");
+        return $this->hasMany(PrivateMessage::class, "reciever_id");
     }
 
     /**
@@ -119,7 +137,7 @@ class User extends Authenticatable
      */
     public function peers()
     {
-        return $this->hasMany(\App\Peer::class);
+        return $this->hasMany(Peer::class);
     }
 
     /**
@@ -128,7 +146,7 @@ class User extends Authenticatable
      */
     public function follows()
     {
-        return $this->hasMany(\App\Follow::class);
+        return $this->hasMany(Follow::class);
     }
 
     /**
@@ -137,7 +155,7 @@ class User extends Authenticatable
      */
     public function articles()
     {
-        return $this->hasMany(\App\Article::class);
+        return $this->hasMany(Article::class);
     }
 
     /**
@@ -146,7 +164,7 @@ class User extends Authenticatable
      */
     public function posts()
     {
-        return $this->hasMany(\App\Post::class);
+        return $this->hasMany(Post::class);
     }
 
     /**
@@ -155,7 +173,7 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany(\App\Comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     /**
@@ -164,7 +182,7 @@ class User extends Authenticatable
      */
     public function requests()
     {
-        return $this->hasMany(\App\Requests::class);
+        return $this->hasMany(Requests::class);
     }
 
     /**
@@ -173,7 +191,7 @@ class User extends Authenticatable
      */
     public function ApprovedRequests()
     {
-        return $this->hasMany(\App\Requests::class, 'approved_by');
+        return $this->hasMany(Requests::class, 'approved_by');
     }
 
     /**
@@ -182,7 +200,7 @@ class User extends Authenticatable
      */
     public function FilledRequests()
     {
-        return $this->hasMany(\App\Requests::class, 'filled_by');
+        return $this->hasMany(Requests::class, 'filled_by');
     }
 
     /**
@@ -191,7 +209,7 @@ class User extends Authenticatable
      */
     public function requestBounty()
     {
-        return $this->hasMany(\App\RequestsBounty::class);
+        return $this->hasMany(RequestsBounty::class);
     }
 
     /**
@@ -200,7 +218,7 @@ class User extends Authenticatable
      */
     public function moderated()
     {
-        return $this->hasMany(\App\Torrent::class, 'moderated_by');
+        return $this->hasMany(Torrent::class, 'moderated_by');
     }
 
     /**
@@ -209,7 +227,7 @@ class User extends Authenticatable
      */
     public function notes()
     {
-        return $this->hasMany(\App\Note::class, 'user_id');
+        return $this->hasMany(Note::class, 'user_id');
     }
 
     /**
@@ -218,7 +236,7 @@ class User extends Authenticatable
      */
     public function reports()
     {
-        return $this->hasMany(\App\Report::class, 'reporter_id');
+        return $this->hasMany(Report::class, 'reporter_id');
     }
 
     /**
@@ -227,7 +245,7 @@ class User extends Authenticatable
      */
     public function solvedReports()
     {
-        return $this->hasMany(\App\Report::class, 'staff_id');
+        return $this->hasMany(Report::class, 'staff_id');
     }
 
     /**
@@ -235,7 +253,7 @@ class User extends Authenticatable
      */
     public function bookmarks()
     {
-        return $this->belongsToMany(\App\Torrent::class, 'bookmarks', 'user_id', 'torrent_id')->withTimeStamps();
+        return $this->belongsToMany(Torrent::class, 'bookmarks', 'user_id', 'torrent_id')->withTimeStamps();
     }
 
     /**
@@ -251,7 +269,7 @@ class User extends Authenticatable
     */
     public function history()
     {
-        return $this->hasMany(\App\History::class, "user_id");
+        return $this->hasMany(History::class, "user_id");
     }
 
     /*
@@ -259,7 +277,7 @@ class User extends Authenticatable
     */
     public function userban()
     {
-        return $this->hasMany(\App\Ban::class, "owned_by");
+        return $this->hasMany(Ban::class, "owned_by");
     }
 
     /*
@@ -267,17 +285,17 @@ class User extends Authenticatable
     */
     public function staffban()
     {
-        return $this->hasMany(\App\Ban::class, "created_by");
+        return $this->hasMany(Ban::class, "created_by");
     }
 
-    public function staffwarning()
+    public function warnedBy()
     {
-        return $this->hasMany(\App\Warning::class, 'warned_by');
+        return $this->hasMany(Warning::class, 'warned_by');
     }
 
-    public function userwarning()
+    public function warnings()
     {
-        return $this->hasMany(\App\Warning::class, 'user_id');
+        return $this->hasMany(Warning::class, 'user_id');
     }
 
     /**
@@ -286,7 +304,7 @@ class User extends Authenticatable
      */
     public function sentInvite()
     {
-        return $this->hasMany(\App\Invite::class, 'user_id');
+        return $this->hasMany(Invite::class, 'user_id');
     }
 
     /**
@@ -295,7 +313,7 @@ class User extends Authenticatable
      */
     public function recievedInvite()
     {
-        return $this->hasMany(\App\Invite::class, 'accepted_by');
+        return $this->hasMany(Invite::class, 'accepted_by');
     }
 
     /**
@@ -304,7 +322,7 @@ class User extends Authenticatable
      */
     public function featuredTorrent()
     {
-        return $this->hasMany(\App\FeaturedTorrent::class);
+        return $this->hasMany(FeaturedTorrent::class);
     }
 
     /**

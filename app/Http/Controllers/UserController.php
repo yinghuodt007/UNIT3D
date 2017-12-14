@@ -17,16 +17,10 @@ use App\Group;
 use App\User;
 use App\Peer;
 use App\Torrent;
-use App\Comment;
 use App\Client;
-use App\Post;
-use App\Topic;
 use App\PrivateMessage;
-use App\Follow;
 use App\History;
-use App\Thank;
 use App\Warning;
-use App\Note;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -53,10 +47,17 @@ class UserController extends Controller
      * @var UserRepositoryInterface
      */
     private $user;
+    /**
+     * @var Group
+     */
+    private $group;
 
-    public function __construct(UserRepositoryInterface $user)
+
+    /*todo: make group repository with interface just like what i have done with the User */
+    public function __construct(UserRepositoryInterface $user, Group $group)
     {
         $this->user = $user;
+        $this->group = $group;
     }
 
     /**
@@ -91,27 +92,25 @@ class UserController extends Controller
      */
     public function profile($id)
     {
-        $user = User::findOrFail($id);
-        $groups = Group::all();
-        $hiscount = History::where('user_id', '=', $id)->count();
-        $seedtime = History::where('user_id', '=', $id)->sum('seedtime');
+        $user = $this->user->findOrFail($id);
+        $owner = $this->user->getAuthenticatedUser();
 
-        $num_uploads = Torrent::where('user_id', '=', $id)->count();
-        $num_downloads = History::where('user_id', '=', $id)->where('actual_downloaded', '>', 0)->count();
-        $achievements = $user->unlockedAchievements();
-        $followers = Follow::where('target_id', '=', $id)->get();
-        $thanks_given = Thank::where('user_id', '=', $id)->count();
-        $tor_comments = Comment::where('user_id', '=', $id)->where('torrent_id', '>', 0)->count();
-        $art_comments = Comment::where('user_id', '=', $id)->where('article_id', '>', 0)->count();
-        $req_comments = Comment::where('user_id', '=', $id)->where('requests_id', '>', 0)->count();
-        $topics = Topic::where('first_post_user_id', '=', $id)->count();
-        $posts = Post::where('user_id', '=', $id)->count();
-        $warnings = Warning::where('user_id', '=', $id)->whereNotNull('torrent')->where('active', '=', '1')->take(3)->get();
-        $hitrun = Warning::where('user_id', '=', $id)->orderBy('created_at', 'DESC')->get();
-        $notes = Note::where('user_id', '=', $id)->count();
+        $history = $user->history;
 
-        return view('user.profile', ['user' => $user, 'groups' => $groups, 'num_uploads' => $num_uploads, 'num_downloads' => $num_downloads, 'achievements' => $achievements, 'followers' => $followers, 'notes' => $notes,
-            'seedtime' => $seedtime, 'hiscount' => $hiscount, 'thanks_given' => $thanks_given, 'tor_comments' => $tor_comments, 'art_comments' => $art_comments, 'req_comments' => $req_comments, 'topics' => $topics, 'posts' => $posts, 'warnings' => $warnings, 'hitrun' => $hitrun]);
+        $warnings = $user->warnings()
+            ->whereNotNull('torrent')
+            ->where('active', 1)
+            ->take(3)
+            ->get();
+
+        $hitrun = $user->warnings()
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        $groups = $this->group->all();
+
+        return view('user.profile', compact('owner', 'user', 'history', 'warnings', 'hitrun', 'groups'));
+
     }
 
     /**

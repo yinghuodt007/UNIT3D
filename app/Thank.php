@@ -20,12 +20,22 @@ class Thank extends Model
         'user_id', 'torrent_id'
     ];
 
-    /**
-     * Belongs to Torrent
-     *
-     */
-    public function torrent()
+    public function user()
     {
-        return $this->belongsTo(\App\Torrent::class);
+        return $this->hasOneThrough(Torrent::class, 'torrent_id', 'id');
     }
+
+    public function by()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+//    /**
+//     * Belongs to Torrent
+//     *
+//     */
+//    public function torrent()
+//    {
+//        return $this->belongsTo(\App\Torrent::class);
+//    }
 }
