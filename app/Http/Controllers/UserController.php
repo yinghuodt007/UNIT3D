@@ -79,7 +79,7 @@ class UserController extends Controller
      */
     public function userSearch(Request $request)
     {
-        $users = $this->user->sarch($request->get('username'));
+        $users = $this->user->search($request->get('username'));
         return view('user.members', compact('users'));
     }
 
