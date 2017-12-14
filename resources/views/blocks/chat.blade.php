@@ -26,7 +26,7 @@
                 <h4 class="list-group-item-heading"><span class="badge-user text-bold"><i
                                 class="{{ $messages->poster->group->icon }}" data-toggle="tooltip" title=""
                                 data-original-title="{{ $messages->poster->group->name }}"></i>&nbsp;<a
-                                href="{{ route('profile', array('username' => $messages->poster->username, 'id' => $messages->poster->id)) }}"
+                                href="{{ route('profile', array('id' => $messages->poster->id)) }}"
                                 style="color:{{ $messages->poster->group->color }};">{{ $messages->poster->username }}</a>
                 @if($messages->poster->isOnline())
                   <i class="fa fa-circle text-green" data-toggle="tooltip" title="" data-original-title="User Is Online!"></i>

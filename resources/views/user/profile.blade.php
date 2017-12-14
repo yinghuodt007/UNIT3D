@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
 <li>
-  <a href="{{ route('profile', ['username' => $user->username, 'id' => $user->id]) }}" itemprop="url"
+  <a href="{{ route('profile', ['id' => $user->id]) }}" itemprop="url"
      class="l-breadcrumb-item-link">
     <span itemprop="title" class="l-breadcrumb-item-link-title">{{ $user->username }}</span>
   </a>
@@ -49,11 +49,11 @@
         {{ $user->username }}'s Follower's:
           @foreach($followers as $f)
           @if($f->user->image != null)
-            <a href="{{ route('profile', ['username' => $f->user->username, 'id' => $f->user_id]) }}">
+            <a href="{{ route('profile', ['id' => $f->user_id]) }}">
           <img src="{{ url('files/img/' . $f->user->image) }}" data-toggle="tooltip" title="{{ $f->user->username }}" height="50px" data-original-title="{{ $f->user->username }}">
           </a>
           @else
-            <a href="{{ route('profile', ['username' => $f->user->username, 'id' => $f->user_id]) }}">
+            <a href="{{ route('profile', ['id' => $f->user_id]) }}">
               <img src="{{ url('img/profile.png') }}" data-toggle="tooltip" title="{{ $f->user->username }}"
                    height="50px" data-original-title="{{ $f->user->username }}">
           </a>

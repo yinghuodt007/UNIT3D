@@ -59,10 +59,10 @@
         <a href="#" class="pull-left">
             <img src="{{ url('img/profile.png') }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
                 <strong>ANONYMOUS @if(Auth::user()->group->is_modo)<a
-                            href="{{ route('profile', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">({{ $comment->user->username }}
+                            href="{{ route('profile', ['id' => $comment->user->id]) }}">({{ $comment->user->username }}
                         )</a>@endif</strong>
         @else
-                <a href="{{ route('profile', array('username' => $comment->user->username, 'id' => $comment->user->id)) }}"
+                <a href="{{ route('profile', array('id' => $comment->user->id)) }}"
                    class="pull-left">
         @if($comment->user->image != null)
         <img src="{{ url('files/img/' . $comment->user->image) }}" alt="{{ $comment->user->username }}" class="img-avatar-48"></a>
@@ -71,7 +71,7 @@
                          class="img-avatar-48"></a>
         @endif
                 <strong>By <a
-                            href="{{ route('profile', ['username' => $comment->user->username, 'id' => $comment->user->id]) }}">{{ $comment->user->username }}</a></strong> @endif
+                            href="{{ route('profile', ['id' => $comment->user->id]) }}">{{ $comment->user->username }}</a></strong> @endif
         <span class="text-muted"><small><em>{{$comment->created_at->diffForHumans() }}</em></small></span>
         @if($comment->user_id == Auth::id() || Auth::user()->group->is_modo)
         <a title="Delete your comment" href="{{route('comment_delete',['comment_id'=>$comment->id])}}"><i class="pull-right fa fa-lg fa-times" aria-hidden="true"></i></a>

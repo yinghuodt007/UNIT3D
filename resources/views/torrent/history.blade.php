@@ -51,14 +51,14 @@
         <td>
             <span class="badge-user text-orange text-bold"><i class="fa fa-eye-slash" aria-hidden="true"></i>ANONYMOUS</span>
             @if(Auth::user()->id == $hpeers->user->id || Auth::user()->group->is_modo)
-                <a href="{{ route('profile', ['username' => $hpeers->user->username, 'id' => $hpeers->user->id]) }}"><span
+                <a href="{{ route('profile', ['id' => $hpeers->user->id]) }}"><span
                             class="badge-user text-bold"
                             style="color:{{ $hpeers->user->group->color }}">{{ $hpeers->user->username }}</span></a>
             @endif
         </td>
         @else
         <td>
-            <a href="{{ route('profile', ['username' => $hpeers->user->username, 'id' => $hpeers->user->id]) }}"><span
+            <a href="{{ route('profile', ['id' => $hpeers->user->id]) }}"><span
                         class="badge-user text-bold"
                         style="color:{{ $hpeers->user->group->color }}">{{ $hpeers->user->username }}</span></a>
         </td>

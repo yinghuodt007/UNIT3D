@@ -45,11 +45,11 @@
       <tr>
         <td>
             <a class="name"
-               href="{{ route('profile', ['username' => $n->noteduser->username, 'id' => $n->user_id ]) }}">{{ $n->noteduser->username }}</a>
+               href="{{ route('profile', ['id' => $n->user_id ]) }}">{{ $n->noteduser->username }}</a>
         </td>
         <td>
             <a class="name"
-               href="{{ route('profile', ['username' => $n->staffuser->username, 'id' => $n->staff_id ]) }}">{{ $n->staffuser->username }}</a>
+               href="{{ route('profile', ['id' => $n->staff_id ]) }}">{{ $n->staffuser->username }}</a>
         </td>
         <td>
           {{ $n->message }}

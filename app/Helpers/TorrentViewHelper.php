@@ -61,7 +61,7 @@ class TorrentViewHelper
 
             $torrent_link = route('torrent', ['slug' => $list->slug, 'id' => $list->id]);
             $download_check_link = route('download_check', ['slug' => $list->slug, 'id' => $list->id]);
-            $user_link = route('profile', ['username' => $list->user->username, 'id' => $list->user->id]);
+            $user_link = route('profile', ['id' => $list->user->id]);
 
             if ($list->anon == 1) {
                 if ($user->id == $list->user->id || $user->group->is_modo) {

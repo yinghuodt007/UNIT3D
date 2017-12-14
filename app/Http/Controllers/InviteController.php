@@ -52,7 +52,7 @@ class InviteController extends Controller
         $exsist = Invite::where('email', '=', $request->get('email'))->first();
         $member = User::where('email', '=', $request->get('email'))->first();
         if ($exsist || $member) {
-            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::error('The email address your trying to send a invite to has already been sent one or is a user already.', 'My Dude!', ['options']));
+            return Redirect::route('profile', ['id' => $user->id])->with(Toastr::error('The email address your trying to send a invite to has already been sent one or is a user already.', 'My Dude!', ['options']));
         }
 
         if ($user->invites > 0) {

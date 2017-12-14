@@ -39,7 +39,7 @@ class UserRepository implements UserRepositoryInterface
             ['username', 'like', '%' . $username . '%'],
         ])->paginate($paginate);
 
-        $users->setPath('?username=' . $username);
+        //$users->setPath('?username=' . $username);
 
         return $users;
     }

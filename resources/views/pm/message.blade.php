@@ -40,11 +40,11 @@
         <div class="row message-headers">
           <div class="col-sm-4">
               <div><strong>{{ trans('pm.from') }}:</strong> <a
-                          href="{{ route('profile', ['username' => $pm->sender->username, 'id' => $pm->sender->id]) }}"
+                          href="{{ route('profile', ['id' => $pm->sender->id]) }}"
                           title="">{{ $pm->sender->username }}</a>
             </div>
               <div><strong>{{ trans('pm.to') }}:</strong> <a
-                          href="{{ route('profile', ['username' => $pm->receiver->username, 'id' => $pm->receiver->id]) }}"
+                          href="{{ route('profile', ['id' => $pm->receiver->id]) }}"
                           title="">{{ $pm->receiver->username }}</a>
             </div>
           </div>

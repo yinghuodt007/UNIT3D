@@ -48,7 +48,7 @@ class NoteController extends Controller
         // Activity Log
         \LogActivity::addToLog("Staff Member " . $staff->username . " has added a note on " . $user->username . " account.");
 
-        return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Staff Note Has Successfully Posted', 'Success!', ['options']));
+        return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Your Staff Note Has Successfully Posted', 'Success!', ['options']));
     }
 
     public function getNotes()

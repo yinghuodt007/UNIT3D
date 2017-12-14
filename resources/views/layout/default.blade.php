@@ -138,7 +138,7 @@
               </a>
               <ul class="dropdown-menu ">
                   <li>
-                      <a href="{{ route('profile', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}"><i
+                    <a href="{{ route('profile', array('id' => Auth::user()->id)) }}"><i
                                   class="fa fa-user"></i>{{ trans('user.my-profile') }}</a></li>
                 <li><a href="{{ route('lock') }}"><i class="fa fa-lock"></i>Lock Account</a></li>
                 <li>
@@ -280,8 +280,8 @@
               <div class="container">
                 <ul class="list-inline">
                   <li><i class="fa fa-user text-black"></i>
-                      <a href="{{ route('profile', array('username' => Auth::user()->username, 'id' => Auth::user()->id)) }}"
-                         class="l-header-user-data-link">
+                    <a href="{{ route('profile', array('id' => Auth::user()->id)) }}"
+                       class="l-header-user-data-link">
                       <span class="badge-user" style="color:{{ Auth::user()->group->color }}"><strong>{{ Auth::user()->username }}</strong>@if(Auth::user()->getWarning() > 0) <i class="fa fa-exclamation-circle text-orange" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="Active Warning"></i>@endif</span>
                     </a>
                   </li>

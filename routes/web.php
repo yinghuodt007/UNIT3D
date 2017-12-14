@@ -192,7 +192,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/lockscreen', 'LockAccountController@unlock')->name('unlock');
     Route::get('/members', 'UserController@members')->name('members');
     Route::any('/members/results', 'UserController@userSearch')->name('userSearch');
-    Route::get('/{username}.{id}', 'UserController@profile')->name('profile');
+    Route::get('/profile/{id}', 'UserController@profile')->name('profile');
     Route::any('/{username}.{id}/edit', 'UserController@editProfile')->name('user_edit_profile');
     Route::post('/{username}.{id}/photo', 'UserController@changePhoto')->name('user_change_photo');
     Route::get('/{username}.{id}/activate/{token}', 'UserController@activate')->name('user_activate');

@@ -41,12 +41,12 @@
               @if($s->user->private_profile == 1)
                     <span class="badge-user text-bold"><span class="text-orange"><i class="fa fa-eye-slash"
                                                                                     aria-hidden="true"></i>HIDDEN</span>@if(Auth::user()->id == $s->user->id || Auth::user()->group->is_modo)
-                            <a href="{{ route('profile', ['username' => $s->user->username, 'id' => $s->user->id]) }}">({{ $s->user->username }}
+                            <a href="{{ route('profile', ['id' => $s->user->id]) }}">({{ $s->user->username }}
                                 )</a></span>
               @endif
               @else
                     <span class="badge-user text-bold"><a
-                                href="{{ route('profile', ['username' => $s->user->username, 'id' => $s->user->id]) }}">{{ $s->user->username }}</a></span>
+                                href="{{ route('profile', ['id' => $s->user->id]) }}">{{ $s->user->username }}</a></span>
               @endif
             </td>
             <td>

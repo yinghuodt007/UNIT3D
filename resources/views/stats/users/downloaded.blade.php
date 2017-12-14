@@ -43,11 +43,11 @@
               @if($d->private_profile == 1)
                     <span class="badge-user text-bold"><span class="text-orange"><i class="fa fa-eye-slash"
                                                                                     aria-hidden="true"></i>HIDDEN</span>@if(Auth::user()->id == $d->id || Auth::user()->group->is_modo)
-                            <a href="{{ route('profile', ['username' => $d->username, 'id' => $d->id]) }}">({{ $d->username }}</a></span>
+                            <a href="{{ route('profile', ['id' => $d->id]) }}">({{ $d->username }}</a></span>
               @endif
               @else
                     <span class="badge-user text-bold"><a
-                                href="{{ route('profile', ['username' => $d->username, 'id' => $d->id]) }}">{{ $d->username }}</a></span>
+                                href="{{ route('profile', ['id' => $d->id]) }}">{{ $d->username }}</a></span>
               @endif
             </td>
             <td>{{ \App\Helpers\StringHelper::formatBytes($d->uploaded, 2) }}</td>

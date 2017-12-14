@@ -79,7 +79,7 @@ class UserController extends Controller
      */
     public function userSearch(Request $request)
     {
-        $users = $this->user->search($request->get('username'));
+        $users = $this->user->sarch($request->get('username'));
         return view('user.members', compact('users'));
     }
 
@@ -89,7 +89,7 @@ class UserController extends Controller
      * @access public
      * @return view user.profile
      */
-    public function profile($username, $id)
+    public function profile($id)
     {
         $user = User::findOrFail($id);
         $groups = Group::all();
@@ -147,7 +147,7 @@ class UserController extends Controller
             // Activity Log
             \LogActivity::addToLog("Member " . $user->username . " has updated there profile.");
 
-            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
         }
 
         return view('user.edit_profile', ['user' => $user]);
@@ -187,7 +187,7 @@ class UserController extends Controller
             // Activity Log
             \LogActivity::addToLog("Member " . $user->username . " has changed there account settings.");
 
-            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Your Account Was Updated Successfully!', 'Yay!', ['options']));
         } else {
             return redirect()->back()->with(Toastr::warning('Something Went Wrong!', 'Error', ['options']));
         }
@@ -238,7 +238,7 @@ class UserController extends Controller
                 // Activity Log
                 \LogActivity::addToLog("Member " . $user->username . " has changed there email address on file.");
 
-                return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your Email Was Updated Successfully!', 'Yay!', ['options']));
+                return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Your Email Was Updated Successfully!', 'Yay!', ['options']));
             } else {
                 return redirect()->back()->with(Toastr::warning('Your Password Was Incorrect!', 'Error', ['options']));
             }
@@ -257,7 +257,7 @@ class UserController extends Controller
         if (Request::isMethod('post')) {
             $user->passkey = md5(uniqid() . time() . microtime());
             $user->save();
-            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Your PID Was Changed Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Your PID Was Changed Successfully!', 'Yay!', ['options']));
         } else {
             return redirect()->back()->with(Toastr::warning('Something Went Wrong!', 'Error', ['options']));
         }

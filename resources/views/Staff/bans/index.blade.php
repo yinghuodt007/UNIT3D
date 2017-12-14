@@ -52,11 +52,11 @@
           </td>
           <td class="user-name">
               <a class="name"
-                 href="{{ route('profile', ['username' => $b->banneduser->username, 'id' => $b->owned_by ]) }}">{{ $b->banneduser->username }}</a>
+                 href="{{ route('profile', ['id' => $b->owned_by ]) }}">{{ $b->banneduser->username }}</a>
           </td>
           <td class="user-name">
               <a class="name"
-                 href="{{ route('profile', ['username' => $b->staffuser->username, 'id' => $b->created_by ]) }}">{{ $b->staffuser->username }}</a>
+                 href="{{ route('profile', ['id' => $b->created_by ]) }}">{{ $b->staffuser->username }}</a>
           </td>
           <td>
             {{ $b->ban_reason }}

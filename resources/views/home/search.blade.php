@@ -75,12 +75,12 @@
                    @if($t->anon == 1)
                          <i class="fa fa-upload"></i> By
                          ANONYMOUS @if(Auth::user()->id == $t->user->id || Auth::user()->group->is_modo)<a
-                                 href="{{ route('profile', ['username' => $t->user->username, 'id' => $t->user->id]) }}">({{ $t->user->username }}
+                                 href="{{ route('profile', ['id' => $t->user->id]) }}">({{ $t->user->username }}
                              )</a>
                    @endif
                    @else
                          <i class="fa fa-upload"></i> By <a
-                                 href="{{ route('profile', ['username' => $t->user->username, 'id' => $t->user->id]) }}">{{ $t->user->username }}</a>
+                                 href="{{ route('profile', ['id' => $t->user->id]) }}">{{ $t->user->username }}</a>
                    @endif
                  </span>
                  <a rel="nofollow" href="https://anon.to?http://www.imdb.com/title/tt{{ $t->imdb }}"><span class="badge-extra text-black"><i class="fa fa-imdb" data-toggle="tooltip" title="" data-original-title="View IMDB"></i></span></a>

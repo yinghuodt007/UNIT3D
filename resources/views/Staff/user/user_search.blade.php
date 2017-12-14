@@ -57,7 +57,7 @@
                           <img src="{{ url('img/profile.png') }}" alt="{{ $user->username }}" class="img-circle"> @endif
                   </td>
                     <td class="user-name"><a
-                                href="{{ route('profile', ['username' => $user->username, 'id' => $user->id]) }}"
+                                href="{{ route('profile', ['id' => $user->id]) }}"
                                 class="name">{{ $user->username }}</a> <span>{{ $user->group->name }}</span></td>
                   @if(Auth::user()->group->is_modo)
                   <td class="hidden-xs hidden-sm"> <span class="email">{{ $user->email }}</span> </td>
@@ -101,7 +101,7 @@
                                                  class="img-circle"> @endif
 									</td>
                                     <td class="user-name"><a
-                                                href="{{ route('profile', ['username' => $uploader->username, 'id' => $uploader->id]) }}"
+                                                href="{{ route('profile', ['id' => $uploader->id]) }}"
                                                 class="name">{{ $uploader->username }}</a>
                                         <span>{{ $uploader->group->name }}</span></td>
 									@if(Auth::user()->group->is_modo)
@@ -140,7 +140,7 @@
                           <img src="{{ url('img/profile.png') }}" alt="{{ $mod->username }}" class="img-circle"> @endif
                   </td>
                     <td class="user-name"><a
-                                href="{{ route('profile', ['username' => $mod->username, 'id' => $mod->id]) }}"
+                                href="{{ route('profile', ['id' => $mod->id]) }}"
                                 class="name">{{ $mod->username }}</a> <span>{{ $mod->group->name }}</span></td>
                   @if(Auth::user()->group->is_modo)
                   <td class="hidden-xs hidden-sm"> <span class="email">{{ $mod->email }}</span> </td>
@@ -179,7 +179,7 @@
                                class="img-circle"> @endif
                   </td>
                     <td class="user-name"><a
-                                href="{{ route('profile', ['username' => $admin->username, 'id' => $admin->id]) }}"
+                                href="{{ route('profile', ['id' => $admin->id]) }}"
                                 class="name">{{ $admin->username }}</a> <span>{{ $admin->group->name }}</span></td>
                   @if(Auth::user()->group->is_modo)
                   <td class="hidden-xs hidden-sm"> <span class="email">{{ $admin->email }}</span> </td>
@@ -218,7 +218,7 @@
                                class="img-circle"> @endif
                   </td>
                     <td class="user-name"><a
-                                href="{{ route('profile', ['username' => $coder->username, 'id' => $coder->id]) }}"
+                                href="{{ route('profile', ['id' => $coder->id]) }}"
                                 class="name">{{ $coder->username }}</a> <span>{{ $coder->group->name }}</span></td>
                   @if(Auth::user()->group->is_modo)
                   <td class="hidden-xs hidden-sm"> <span class="email">{{ $coder->email }}</span> </td>

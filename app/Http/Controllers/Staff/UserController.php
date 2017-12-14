@@ -57,7 +57,7 @@ class UserController extends Controller
         $users = User::where([
             ['username', 'like', '%' . Request::get('username') . '%'],
         ])->paginate(25);
-        $users->setPath('?username=' . Request::get('username'));
+        //$users->setPath('?username=' . Request::get('username'));
         return view('Staff.user.user_results')->with('users', $users);
     }
 
@@ -98,7 +98,7 @@ class UserController extends Controller
             // Activity Log
             \LogActivity::addToLog("Staff Member " . $staff->username . " has edited " . $user->username . " account.");
 
-            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Account Was Updated Successfully!', 'Yay!', ['options']));
+            return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Account Was Updated Successfully!', 'Yay!', ['options']));
         } else {
             return redirect()->back()->with(Toastr::warning('Something Went Wrong!', 'Error', ['options']));
         }
@@ -126,7 +126,7 @@ class UserController extends Controller
             // Activity Log
             \LogActivity::addToLog("Staff Member " . $staff->username . " has edited " . $user->username . " account permissions.");
 
-            return Redirect::route('profile', ['username' => $user->username, 'id' => $user->id])->with(Toastr::success('Account Permissions Succesfully Edited', 'Yay!', ['options']));
+            return Redirect::route('profile', ['id' => $user->id])->with(Toastr::success('Account Permissions Succesfully Edited', 'Yay!', ['options']));
         } else {
             return redirect()->back()->with(Toastr::warning('Something Went Wrong!', 'Error', ['options']));
         }

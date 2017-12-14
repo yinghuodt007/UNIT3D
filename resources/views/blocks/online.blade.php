@@ -8,12 +8,12 @@
     @if($u->isOnline())
     @if($u->hidden == 1)
             <span class="badge-extra text-orange text-bold">HIDDEN @if(Auth::user()->group->is_modo)<a
-                      href="{{ route('profile', array('username' => $u->username, 'id' => $u->id)) }}">({{ $u->username }} @if($u->getWarning() > 0)
+                        href="{{ route('profile', array('id' => $u->id)) }}">({{ $u->username }} @if($u->getWarning() > 0)
                   <i class="fa fa-exclamation-circle text-orange" aria-hidden="true" data-toggle="tooltip" title=""
                      data-original-title="Active Warning"></i>@endif)
       </a>@endif</span>
     @else
-            <a href="{{ route('profile', array('username' => $u->username, 'id' => $u->id)) }}"><span
+                    <a href="{{ route('profile', array('id' => $u->id)) }}"><span
                       class="badge-extra text-bold"
                       style="color:{{ $u->group->color }}; background-image:{{ $u->group->effect }};"><i
                         class="{{ $u->group->icon }}" data-toggle="tooltip" title=""
