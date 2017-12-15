@@ -69,13 +69,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Thanks
+     * Thanks Given
      *
      */
-    public function thanks()
+    public function thanksGiven()
+    {
+        return $this->hasMany(Thank::class, 'user_id', 'id');
+    }
+
+    /**
+     * Thanks Received
+     *
+     */
+    public function thanksReceived()
     {
         return $this->hasManyThrough(Thank::class, Torrent::class);
     }
+
 
     /**
      * Topics

@@ -201,12 +201,12 @@
       <ul class="list-inline mb-0">
         <li>
           <span class="badge-extra"><strong>Thanks Received:</strong>
-            <span class="text-pink text-bold">--</span>
+            <span class="text-pink text-bold">{{ $user->thanksReceived->count() }}</span>
           </span>
         </li>
         <li>
           <span class="badge-extra"><strong>Thanks Given:</strong>
-            <span class="text-green text-bold">{{ $user->thanks->count() }}</span>
+            <span class="text-green text-bold">{{ $user->thanksGiven->count() }}</span>
           </span>
         </li>
         <li>
