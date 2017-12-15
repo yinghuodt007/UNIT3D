@@ -38,6 +38,7 @@
             @include('user.partials.profile.recent_achievements')
             @include('user.partials.profile.followers')
             @include('user.partials.profile.header')
+            @include('user.partials.profile.public_info')
 
             @if(Auth::check() && ($owner->id == $user->id || $owner->group->is_modo))
                 @include('user.partials.profile.owners_info')
