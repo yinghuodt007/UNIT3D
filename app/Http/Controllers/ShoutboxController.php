@@ -85,7 +85,7 @@ class ShoutboxController extends Controller
             $appurl = env('APP_URL', 'http://unit3d.site');
             $data = '<li class="list-group-item">
       ' . ($flag ? $avatar : "") . '
-      <h4 class="list-group-item-heading"><span class="badge-user text-bold"><i class="' . (Auth::user()->group->icon) . '" data-toggle="tooltip" title="" data-original-title="' . (Auth::user()->group->name) . '"></i>&nbsp;<a style="color:' . (Auth::user()->group->color) . ';" href=\'' . $appurl . '/' . Auth::user()->username . '.' . Auth::user()->id . '\'>'
+      <h4 class="list-group-item-heading"><span class="badge-user text-bold"><i class="' . (Auth::user()->group->icon) . '" data-toggle="tooltip" title="" data-original-title="' . (Auth::user()->group->name) . '"></i>&nbsp;<a style="color:' . (Auth::user()->group->color) . ';" href=\'' . $appurl . '/profile/' . Auth::user()->id . '\'>'
                 . Auth::user()->username . '</a>
       ' . ($flag ? $online : "") . '
       </span>&nbsp;<span class="text-muted"><small><em>' . Carbon::now()->diffForHumans() . '</em></small></span>
@@ -146,7 +146,7 @@ class ShoutboxController extends Controller
                 $appurl = env('APP_URL', 'http://unit3d.site');
                 $data[] = '<li class="list-group-item ' . $class . '">
                        ' . ($flag ? $avatar : "") . '
-                       <h4 class="list-group-item-heading"><span class="badge-user text-bold"><i class="' . ($messages->poster->group->icon) . '" data-toggle="tooltip" title="" data-original-title="' . ($messages->poster->group->name) . '"></i>&nbsp;<a style="color:' . ($messages->poster->group->color) . ';" href=\'' . $appurl . '/' . e($messages->poster->username) . '.' . e($messages->poster->id) . '\'>'
+                       <h4 class="list-group-item-heading"><span class="badge-user text-bold"><i class="' . ($messages->poster->group->icon) . '" data-toggle="tooltip" title="" data-original-title="' . ($messages->poster->group->name) . '"></i>&nbsp;<a style="color:' . ($messages->poster->group->color) . ';" href=\'' . $appurl . '/profile/' . e($messages->poster->id) . '\'>'
                     . e($messages->poster->username) . '</a>
                        ' . ($flag ? $online : "") . '
                        </span>&nbsp;<span class="text-muted"><small><em>' . ($messages->created_at->diffForHumans()) . '</em></small></span>
