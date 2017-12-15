@@ -12,6 +12,7 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Contracts\UserRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -30,6 +31,17 @@ use \Toastr;
 
 class UserController extends Controller
 {
+
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $user;
+
+    public function __construct(UserRepositoryInterface $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Members List
      *
@@ -37,12 +49,12 @@ class UserController extends Controller
      */
     public function members()
     {
-        $users = User::orderBy('created_at', 'DESC')->paginate(20);
-        $uploaders = User::where('group_id', '=', 7)->orderBy('created_at', 'DESC')->paginate(20);
-        $mods = User::where('group_id', '=', 6)->orderBy('created_at', 'DESC')->paginate(20);
-        $admins = User::where('group_id', '=', 4)->orderBy('created_at', 'DESC')->paginate(20);
-        $coders = User::where('group_id', '=', 10)->orderBy('created_at', 'DESC')->paginate(20);
-        return view('Staff.user.user_search', ['users' => $users, 'uploaders' => $uploaders, 'mods' => $mods, 'admins' => $admins, 'coders' => $coders]);
+        $users = $this->user->members();
+        $uploaders = $this->user->members(7, 20);
+        $mods = $this->user->members(6, 20);
+        $admins = $this->user->members(4, 20);
+        $coders = $this->user->members(10, 20);
+        return view('Staff.user.user_search', compact('users', 'uploaders', 'mods', 'admins', 'coders'));
     }
 
     /**

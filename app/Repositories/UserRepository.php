@@ -34,10 +34,14 @@ class UserRepository implements UserRepositoryInterface
         $this->auth = $auth;
     }
 
-
-    public function members($orderBy = 'created_at', $orderSort = 'DESC', $paginate = 50)
+    public function members($group = null, $paginate = 50, $orderBy = 'created_at', $orderSort = 'DESC')
     {
-        return $this->user->orderBy($orderBy, $orderSort)->paginate($paginate);
+        if ($group === null) {
+            return $this->user->orderBy($orderBy, $orderSort)->paginate($paginate);
+        }
+
+        return $this->user->where('group_id', $group)->orderBy($orderBy, $orderSort)->paginate($paginate);
+
     }
 
     public function search($username, $paginate = 25)

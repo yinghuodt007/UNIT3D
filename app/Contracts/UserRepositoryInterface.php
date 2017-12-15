@@ -14,7 +14,7 @@ namespace App\Contracts;
 
 interface UserRepositoryInterface
 {
-    public function members($orderBy = 'created_at', $orderSort = 'DESC', $paginate = 50);
+    public function members($group = null, $orderBy = 'created_at', $orderSort = 'DESC', $paginate = 50);
 
     public function search($username, $paginate = 25);
 

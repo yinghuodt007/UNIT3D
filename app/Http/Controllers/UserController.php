@@ -117,10 +117,10 @@ class UserController extends Controller
      * Edit User Profile
      *
      * @access public
-     * @return void
+     * @return view
      *
      */
-    public function editProfile(Request $request)
+    public function edit(Request $request)
     {
         $user = Auth::user();
 
