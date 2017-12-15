@@ -98,18 +98,18 @@ class UserController extends Controller
         $history = $user->history;
 
         $warnings = $user->warnings()
-            ->whereNotNull('torrent')
             ->where('active', 1)
             ->take(3)
             ->get();
 
-        $hitrun = $user->warnings()
+        $hitruns = $user->warnings()
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->get()
+            ->count();
 
         $groups = $this->group->all();
 
-        return view('user.profile', compact('owner', 'user', 'history', 'warnings', 'hitrun', 'groups'));
+        return view('user.profile', compact('owner', 'user', 'history', 'warnings', 'hitruns', 'groups'));
 
     }
 

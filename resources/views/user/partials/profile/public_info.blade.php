@@ -204,7 +204,7 @@
             <span class="badge-extra">
               <strong>Hit and Run Count (All Time):
               </strong>
-              <span class="text-red text-bold">{{ $hitrun->count() }}
+              <span class="text-red text-bold">{{ $hitruns }}
               </span>
             </span>
                 </li>
