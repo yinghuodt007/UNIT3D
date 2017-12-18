@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers\Staff;
@@ -34,7 +34,7 @@ class GiftController extends Controller
     public function index()
     {
         $users = User::orderBy('username', 'ASC')->get();
-        return view('Staff.gift.index', compact('users'));
+        return view('Staff.gift.index', ['users' => $users]);
     }
 
     /**

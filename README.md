@@ -23,9 +23,10 @@
 2. [Some Features](#features)
 3. [Requirements](#requirements)
 4. [Installation](#installation)
-5. [License](#license)
-6. [Screenshots](#screenshots)
-7. [Homestead](#homestead)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [Screenshots](#screenshots)
+8. [Homestead](#homestead)
 
 
 ## <a name="introduction"></a> Introduction
@@ -57,6 +58,7 @@ UNIT3D currently offers the following features:
   -   php-curl -> This is specifically needed for the various APIs we have running.
 - Crontab access
 - A Redis server
+- MySQL 5.7
 
 ## <a name="installation"></a> Installation
 
@@ -72,6 +74,10 @@ UNIT3D currently offers the following features:
 10. Go to your sites URL.
 11. Login with the username `UNIT3D` and the password `UNIT3D`. (This is the default owner account.)
 12. Enjoy using UNIT3D.
+
+## <a name="contributing"></a> Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ## <a name="license"></a> License
 

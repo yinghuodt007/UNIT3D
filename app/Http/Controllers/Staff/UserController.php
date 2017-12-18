@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers\Staff;
@@ -54,7 +54,14 @@ class UserController extends Controller
         $mods = $this->user->members(6, 20);
         $admins = $this->user->members(4, 20);
         $coders = $this->user->members(10, 20);
-        return view('Staff.user.user_search', compact('users', 'uploaders', 'mods', 'admins', 'coders'));
+
+        return view('Staff.user.user_search', [
+            'users' => $users,
+            'uploaders' => $uploaders,
+            'mods' => $mods,
+            'admins' => $admins,
+            'coders' => $coders
+        ]);
     }
 
     /**

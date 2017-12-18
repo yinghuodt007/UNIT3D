@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers;
@@ -41,7 +41,12 @@ class GraveyardController extends Controller
         $deadcount = Torrent::where('seeders', '=', '0')->count();
         $time = '2592000';
 
-        return view('graveyard.index', compact('dead', 'deadcount', 'user', 'time'));
+        return view('graveyard.index', [
+            'dead' => $dead,
+            'deadcount' => $deadcount,
+            'user' => $user,
+            'time' => $time
+        ]);
     }
 
     public function resurrect($id)

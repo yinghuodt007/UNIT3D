@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers;
@@ -36,7 +36,7 @@ class PollController extends Controller
     {
         $polls = Poll::orderBy('created_at', 'desc')->paginate(15);
 
-        return view('poll.latest', compact('polls'));
+        return view('poll.latest', ['polls' => $polls]);
     }
 
     /**
@@ -49,7 +49,7 @@ class PollController extends Controller
     {
         $poll = Poll::whereSlug($slug)->firstOrFail();
 
-        return view('poll.show', compact('poll'));
+        return view('poll.show', ['poll' => $poll]);
     }
 
     public function vote(VoteOnPoll $request)
@@ -86,7 +86,7 @@ class PollController extends Controller
     {
         $poll = Poll::whereSlug($slug)->firstOrFail();
 
-        return view('poll.result', compact('poll'));
+        return view('poll.result', ['poll' => $poll]);
     }
 
 }

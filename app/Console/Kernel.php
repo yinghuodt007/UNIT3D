@@ -18,8 +18,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\bonAllocation::class,
         \App\Console\Commands\autoSeedbox::class,
         \App\Console\Commands\autoWarning::class,
-        \App\Console\Commands\removeWarning::class,
-        \App\Console\Commands\denyRights::class,
+        \App\Console\Commands\deactivateWarning::class,
+        \App\Console\Commands\revokePermissions::class,
         \App\Console\Commands\autoBan::class,
         \App\Console\Commands\FlushPeers::class,
         \App\Console\Commands\autoGroup::class,
@@ -39,8 +39,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('bonAllocation')->hourly();
         $schedule->command('autoSeedbox')->hourly();
         $schedule->command('removeWarning')->hourly();
-        $schedule->command('autoWarning')->hourly();
-        $schedule->command('denyRights')->hourly();
+        $schedule->command('deactivateWarning')->hourly();
+        $schedule->command('revokePermissions')->hourly();
         $schedule->command('autoBan')->hourly();
         $schedule->command('FlushPeers')->hourly();
         $schedule->command('autoGroup')->daily();

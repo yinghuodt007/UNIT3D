@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers\Staff;
@@ -31,13 +31,13 @@ class PollController extends Controller
     public function polls()
     {
         $polls = Poll::orderBy('created_at', 'desc')->paginate(20);
-        return view('Staff.poll.polls', compact('polls'));
+        return view('Staff.poll.polls', ['polls' => $polls]);
     }
 
     public function poll($id)
     {
         $poll = Poll::where('id', $id)->firstOrFail();
-        return view('Staff.poll.poll', compact('poll'));
+        return view('Staff.poll.poll', ['poll' => $poll]);
     }
 
     /**

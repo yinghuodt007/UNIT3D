@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers;
@@ -315,7 +315,13 @@ class TorrentController extends Controller
         $alive = Torrent::where('seeders', '>=', 1)->count();
         $dead = Torrent::where('seeders', '=', 0)->count();
         $repository = $this->repository;
-        return view('torrent.torrents', compact('repository', 'torrents', 'user', 'alive', 'dead'));
+        return view('torrent.torrents', [
+            'repository' => $repository,
+            'torrents' => $torrents,
+            'user' => $user,
+            'alive' => $alive,
+            'dead' => $dead
+        ]);
     }
 
     public function faceted(IlluminateRequest $request, Torrent $torrent)

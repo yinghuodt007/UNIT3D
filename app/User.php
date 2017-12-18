@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App;
@@ -24,6 +24,7 @@ use Gstt\Achievements\Achiever;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use function theodorejb\polycast\to_int;
 
 use App\Helpers\StringHelper;
 
@@ -369,7 +370,58 @@ class User extends Authenticatable
      */
     public function getRatio()
     {
-        return round($this->uploaded / max(1, $this->downloaded), 2);
+        if ($this->downloaded == 0) {
+            return INF;
+        }
+        return (float)round($this->uploaded / $this->downloaded, 2);
+    }
+
+    // Return the ratio pretty formated as a string.
+    public function getRatioString()
+    {
+        $ratio = $this->getRatio();
+        if (is_infinite($ratio)) {
+            return "∞";
+        } else {
+            return (string)$ratio;
+        }
+    }
+
+    // Return the ratio after $size bytes would be downloaded.
+    public function ratioAfterSize($size)
+    {
+        if ($this->downloaded + $size == 0) {
+            return INF;
+        }
+        return (float)round($this->uploaded / ($this->downloaded + $size), 2);
+    }
+
+    // Return the ratio after $size bytes would be downloaded, pretty formatted
+    // as a string.
+    public function ratioAfterSizeString($size, $freeleech = false)
+    {
+        if ($freeleech) {
+            return $this->getRatioString();
+        }
+
+        $ratio = $this->ratioAfterSize($size);
+        if (is_infinite($ratio)) {
+            return "∞";
+        } else {
+            return (string)$ratio;
+        }
+    }
+
+    // Return the size (pretty formated) which can be safely downloaded
+    // without falling under the minimum ratio.
+    public function untilRatio($ratio)
+    {
+        if ($ratio == 0.0) {
+            return "∞";
+        }
+
+        $bytes = to_int($this->uploaded / $ratio);
+        return StringHelper::formatBytes($bytes);
     }
 
     /**

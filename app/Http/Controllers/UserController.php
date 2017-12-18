@@ -7,7 +7,7 @@
  *
  * @project    UNIT3D
  * @license    https://choosealicense.com/licenses/gpl-3.0/  GNU General Public License v3.0
- * @author     BluCrew
+ * @author     HDVinnie
  */
 
 namespace App\Http\Controllers;
@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Cache;
 use \Toastr;
-
+use Image;
 use Carbon\Cabon;
 
 /**
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function members()
     {
         $users = $this->user->members();
-        return view('user.members', compact('users'));
+        return view('user.members', ['users' => $users]);
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
     public function userSearch(Request $request)
     {
         $users = $this->user->search($request->get('username'));
-        return view('user.members', compact('users'));
+        return view('user.members', ['users' => $users]);
     }
 
     /**
@@ -109,7 +109,14 @@ class UserController extends Controller
 
         $groups = $this->group->all();
 
-        return view('user.profile', compact('owner', 'user', 'history', 'warnings', 'hitruns', 'groups'));
+        return view('user.profile', [
+            'owner' => $owner,
+            'user' => $user,
+            'history' => $history,
+            'warnings' => $warnings,
+            'hitruns' => $hitruns,
+            'groups' => $groups
+        ]);
 
     }
 
@@ -126,13 +133,13 @@ class UserController extends Controller
 
         // Requetes post only
         if (Request::isMethod('post')) {
+            // Avatar
             if (Request::hasFile('image')) {
-                // Modification de l'image de l'utilisateur
                 $image = Request::file('image');
-                // Check file
                 if (in_array($image->getClientOriginalExtension(), ['jpg', 'JPG', 'jpeg', 'bmp', 'png', 'PNG', 'tiff', 'gif', 'GIF']) && preg_match('#image/*#', $image->getMimeType())) {
-                    // Move file
-                    $image->move(getcwd() . '/files/img/', $user->username . '.' . $image->getClientOriginalExtension());
+                    $filename = $user->username . '.' . $image->getClientOriginalExtension();
+                    $path = public_path('/files/img/' . $filename);
+                    Image::make($image->getRealPath())->fit(150, 150)->save($path);
                     $user->image = $user->username . '.' . $image->getClientOriginalExtension();
                 }
             }
