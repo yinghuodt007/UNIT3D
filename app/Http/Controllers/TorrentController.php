@@ -846,7 +846,7 @@ class TorrentController extends Controller
      */
     public function groupingLayout() {
         $user = Auth::user();
-        $torrents = Torrent::select('imdb')->distinct()->paginate(25);;
+        $torrents = Torrent::select('imdb')->distinct()->paginate(25);
 
         return view('torrent.grouping', ['user' => $user, 'torrents' => $torrents]);
     }
@@ -859,11 +859,9 @@ class TorrentController extends Controller
      */
     public function groupingResults($imdb) {
         $user = Auth::user();
-        $client = new \App\Services\MovieScrapper(config('api-keys.tmdb') , config('api-keys.tvdb') , config('api-keys.omdb'));
-        $movie = $client->scrape('movie', 'tt'.$imdb);
         $torrents = Torrent::where('imdb', $imdb)->get();
 
-        return view('torrent.grouping_results', ['user' => $user, 'torrents' => $torrents, 'movie' => $movie]);
+        return view('torrent.grouping_results', ['user' => $user, 'torrents' => $torrents, 'imdb' => $imdb]);
     }
 
 }

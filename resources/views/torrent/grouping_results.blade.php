@@ -20,13 +20,15 @@
   </a>
 </li>
 <li>
-  <a href="{{ route('grouping_results', ['imdb' => $movie->imdb]) }}" itemprop="url" class="l-breadcrumb-item-link">
+  <a href="{{ route('grouping_results', ['imdb' => $imdb]) }}" itemprop="url" class="l-breadcrumb-item-link">
     <span itemprop="title" class="l-breadcrumb-item-link-title">Grouping Results</span>
   </a>
 </li>
 @stop
 
 @section('content')
+@php $client = new \App\Services\MovieScrapper(config('api-keys.tmdb') , config('api-keys.tvdb') , config('api-keys.omdb')) @endphp
+@php $movie = $client->scrape('movie', 'tt'.$imdb); @endphp
 <div class="container box">
   <div class="header gradient light_blue">
     <div class="inner_content">
