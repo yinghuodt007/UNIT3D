@@ -752,7 +752,7 @@ class TorrentController extends Controller
     public function posterLayout()
     {
         $user = Auth::user();
-        $torrents = Torrent::orderBy('created_at', 'DESC')->paginate(20);
+        $torrents = Torrent::orderBy('created_at', 'DESC')->paginate(25);
         return view('torrent.poster', ['user' => $user, 'torrents' => $torrents, 'categories' => Category::all(), 'types' => Type::all()]);
     }
 
@@ -859,7 +859,7 @@ class TorrentController extends Controller
      */
     public function groupingResults($imdb) {
         $user = Auth::user();
-        $torrents = Torrent::where('imdb', $imdb)->get();
+        $torrents = Torrent::where('imdb', $imdb)->latest()->get();
 
         return view('torrent.grouping_results', ['user' => $user, 'torrents' => $torrents, 'imdb' => $imdb]);
     }
