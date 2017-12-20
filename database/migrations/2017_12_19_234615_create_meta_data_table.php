@@ -15,15 +15,21 @@ class CreateMetaDataTable extends Migration
     {
         Schema::create('meta_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('imdb');
-            $table->string('title');
-            $table->string('year');
-            $table->text('plot');
-            $table->string('genre');
-            $table->string('rating');
-            $table->string('votes');
-            $table->string('poster');
-            $table->string('backdrop');
+            $table->string('imdb')->unique();
+            $table->string('tmdb')->unique()->nullable();
+            $table->string('title')->nullable();
+            $table->string('year')->nullable();
+            $table->text('plot')->nullable();
+            $table->string('genre')->nullable();
+            $table->string('rated')->nullable();
+            $table->string('runtime')->nullable();
+            $table->string('imdbrating')->nullable();
+            $table->string('imdbvotes')->nullable();
+            $table->string('tmdbrating')->nullable();
+            $table->string('tmdbvotes')->nullable();
+            $table->string('poster')->nullable();
+            $table->string('backdrop')->nullable();
+            $table->string('trailer')->nullable();
             $table->timestamps();
         });
     }
